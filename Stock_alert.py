@@ -13,7 +13,7 @@ alert = float(input('Enter the alert: '))
 # Checking given name in dictionary for actual name
 stock_exchange_name = dict[stock_name]
 
-# calling the site and giving input like stock name and .
+# calling the site.
 url = 'https://www.google.com/finance/quote/' + stock_exchange_name
 
 # Request the page
@@ -32,15 +32,23 @@ price = prices[0]
 price = float(price[3:])
 
 # Comparing the alert price and the actual price.
-if alert >= price:
-    print('Stock price is below', alert, ',  Current price is', price)
-    # print('Stock price is below', alert, 'the current price is', price) # uncomment to test
-# below code is for saving the data to csv, only if the alert price is less than or equal to current price
-    # df = pd.DataFrame([{'Stock name': stock_exchange_name, 'Current Price': price, 'Alert price': alert}])
+def compare_prices():
+    if price < alert:
+        print('The following price alert has been triggered.', '\nSymbol:', stock_exchange_name, '\nCurrent price:',
+              price, '\nTrigger set:', 'less than', alert)
+        # print('Stock price is below', alert, 'the current price is', price) # uncomment to test
+    # below code is for saving the data to csv, only if the alert price is less than or equal to current price
+    # df = pd.DataFrame([{'Stock name': stock_exchange_name, 'Current Price': price, 'Trigger set': alert}])
     # df.to_csv('report.csv', index=False, encoding='utf-8')
+    elif price == alert:
+        print('The following price alert has been triggered.', '\nSymbol:', stock_exchange_name, '\nCurrent price is',
+              price, '\nTrigger set:', 'equal to', alert)
+        # df = pd.DataFrame([{'Stock name': stock_exchange_name, 'Current Price': price, 'Trigger set': alert}])
+        # df.to_csv('report.csv', index=False, encoding='utf-8')
+    else:
+        print('Stock Price is above', alert, 'the current price is', price)
 
-else:
-    print('Stock Price is above', alert, 'the current price is', price)
+compare_prices()
 
 # df = pd.DataFrame([{'Price': price}])
 # df.to_csv('sneakers.csv', index=False, encoding='utf-8')
