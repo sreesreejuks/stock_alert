@@ -2,19 +2,27 @@
 from lxml import html
 import requests
 # import pandas as pd
-from share_data import dict
+# from share_data import dict
 
 # stock input & accessing dictionary
 stock_name = input('Enter stock name: ')
 
+"""for key in list(dict.keys()):
+    if key == stock_name:
+        stock_exchange_name = dict[stock_name]
+    else:
+        stock_exchange_name = stock_name
+"""
 # setting alert price
 alert = float(input('Enter the alert: '))
 
 # Checking given name in dictionary for actual name
-stock_exchange_name = dict[stock_name]
+# stock_exchange_name = dict[stock_name]
+stock_exchange_name = stock_name
 
 # calling the site.
-url = 'https://www.google.com/finance/quote/' + stock_exchange_name
+# url = 'https://www.google.com/finance/quote/' + stock_exchange_name
+url = 'https://www.google.com/finance/quote/' + stock_name
 
 # Request the page
 page = requests.get(url)
@@ -25,11 +33,12 @@ tree = html.fromstring(page.content)
 # Get element using XPath
 prices = tree.xpath(
     '//div[@class="YMlKec fxKbKc"]/text()')
-# print(prices)
+#print(prices)
 
 # by default there is rupee symbol in front of the price (ex: ₹238.20), below command is to remove the symbol
 price = prices[0]
 price = float(price[3:])
+
 
 # Comparing the alert price and the actual price.
 def compare_prices():
@@ -47,6 +56,7 @@ def compare_prices():
         # df.to_csv('report.csv', index=False, encoding='utf-8')
     else:
         print('Stock Price is above', alert, 'the current price is', price)
+
 
 compare_prices()
 
